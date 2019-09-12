@@ -29,10 +29,10 @@
 
             var saveInterval = window.setInterval(autoSave, 3000);
 
-            var countInterval = window.setInterval(wordCount, 600);
+            var countInterval = window.setInterval(wordCount, 100);
 
             function wordCount() {
-                var count = document.querySelector("#note").innerHTML.trim().replace(/\s+/g, ' ').split(' ').length; 
+                var count = document.querySelector("#note").innerHTML.trim().replace(/  +/g, ' ').split(' ').length; 
                 document.querySelector("#wordNum").innerHTML = count; 
             }
 
