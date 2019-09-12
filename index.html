@@ -7,10 +7,13 @@
 
     <body>
         <!-- This is a comment -->
-        <h1>Note taking application</h1>
-        <h2>[auto saves every 3 seconds]</h2>
+        <h2 style="margin-top:-5px;">Note taking application</h1>
+        <h4 style="margin-top:-50px;">[auto saves every 3 seconds]</h4>
+        <div id="note" contenteditable style="background-color:#e6e6ff; width:500px; height:400px; margin-top:-30px;"></div>
         <p id="wordNum">Word Count: 0</p>
-        <div id="note" contenteditable></div>
+        <button onclick="manualSave()">Save File</button>
+        <button onclick="clearText()">Clear Text</button>
+        <p id="savedmessage"></p>
 
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
         <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
@@ -28,18 +31,21 @@
                 });
             });
 
-            var saveInterval = window.setInterval(autoSave, 3000);
+            var saveInterval = window.setInterval(writeFile, 3000);
 
             var countInterval = window.setInterval(wordCount, 100);
 
+            function clearText() {
+                document.querySelector("#note").innerHTML = "";
+            }
+            
             function wordCount() {
                 var count = document.querySelector("#note").innerHTML.trim().replace(/  +/g, ' ').split(' ').length;
                 if (document.querySelector("#note").innerHTML.length == 0) count = 0;
                 document.querySelector("#wordNum").innerHTML = "Word Count: " + count; 
             }
 
-            function autoSave()
-            {
+            function writeFile() {
                 fs.writeFile('/note', document.querySelector('#note').innerHTML, function (err) {
                     if (err) throw err; 
                     else {
@@ -48,9 +54,14 @@
                     });
             }
 
+            function manualSave() {
+                writeFile(); 
+                document.querySelector("#savedmessage").innerHTML = "Note was manually saved..."
+                setTimeout(function() {
+                    document.querySelector("#savedmessage").innerHTML = ""
+                }, 2000);
+            }
 
-           
         </script>
-    
     </body>
 </html>
