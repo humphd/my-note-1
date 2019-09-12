@@ -7,7 +7,8 @@
 
     <body>
         <!-- This is a comment -->
-        <h1>Ryan Wilson</h1>
+        <h1>Note taking application</h1>
+        <h2>[auto saves every 3 seconds]</h2>
         <div id="note" contenteditable></div>
 
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
@@ -17,13 +18,13 @@
             window.addEventListener('DOMContentLoaded', (event) => {
                 fs.readFile('/note', 'utf8', function (err, data) {
                     if (err) {
-                        document.querySelector('#note').innerHTML = "Welcome to my notepad";   
+                        document.querySelector('#note').innerHTML = "Typing Area";   
                     } else {
                         document.querySelector('#note').innerHTML = data; 
                     }
                 });
 
-                var intervalID = window.setInterval(myCallback, 500);
+                var intervalID = window.setInterval(myCallback, 3000);
 
                 function myCallback()
                 {
