@@ -33,7 +33,8 @@
 
             function wordCount() {
                 var count = document.querySelector("#note").innerHTML.trim().replace(/  +/g, ' ').split(' ').length;
-                if (document.querySelector("#note").length == 0) count = 0; 
+                if (document.querySelector("#note").length == 0) count = 0;
+                 console.log(document.querySelector("#note").length);
                 document.querySelector("#wordNum").innerHTML = "Word Count: " + count; 
             }
 
