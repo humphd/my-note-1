@@ -33,10 +33,12 @@
 
             function wordCount() {
                 var count = document.querySelector("#note").innerHTML.trim().replace(/  +/g, ' ').split(' ').length;
-                if (document.querySelector("#note").innerHTML.length == 0) count = 0;
+                if (document.querySelector("#note").innerHTML.length == 0 || document.querySelector("#note").innerHTML == "Text Area") {
+                    count = 0;
+                    document.querySelector("#note").innerHTML = "Text Area"
+                }
                 document.querySelector("#wordNum").innerHTML = "Word Count: " + count; 
             }
-
 
             function autoSave()
             {
