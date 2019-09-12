@@ -32,8 +32,8 @@
             var countInterval = window.setInterval(wordCount, 600);
 
             function wordCount() {
-                var count = document.getElementById("#note").innerHTML.trim().replace(/  +/g, ' ').split(' ').length; 
-                document.getElementById("#wordNum").innerHTML = count; 
+                var count = document.querySelector("#note").innerHTML.trim().replace(/  +/g, ' ').split(' ').length; 
+                document.querySelector("#wordNum").innerHTML = count; 
             }
 
 
