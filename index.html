@@ -8,5 +8,34 @@
     <body>
         <!-- This is a comment -->
         <h1>Ryan Wilson</h1>
+        <div id="note" contenteditable></div>
+
+        <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+        <script>
+            const fs = new Filer.FileSystem();
+        
+            window.addEventListener('DOMContentLoaded', (event) => {
+                fs.readFile('/note', 'utf8', function (err, data) {
+                    if (err) {
+                        document.querySelector('#note').innerHTML = "Welcome to my notepad";   
+                    } else {
+                        document.querySelector('#note').innerHTML = data; 
+                    }
+                });
+
+                var intervalID = window.setInterval(myCallback, 500);
+
+                function myCallback()
+                {
+                    fs.writeFile('/note', document.querySelector('#note').innerHTML, function (err) {
+                        if (err) throw err; 
+                        else {
+                            console.log("File was autosaved")
+                        }
+                        });
+                }
+            })
+        </script>
+    
     </body>
 </html>
