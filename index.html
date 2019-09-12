@@ -9,6 +9,7 @@
         <!-- This is a comment -->
         <h1>Note taking application</h1>
         <h2>[auto saves every 3 seconds]</h2>
+        <p id="wordNum">Word Count: 0</p>
         <div id="note" contenteditable></div>
 
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
@@ -26,9 +27,17 @@
                 });
             });
 
-            var intervalID = window.setInterval(myCallback, 3000);
+            var saveInterval = window.setInterval(autoSave, 3000);
 
-            function myCallback()
+            var countInterval = window.setInterval(wordCount, 600);
+
+            function wordCount() {
+                var count = document.getElementById("#note").innerHTML.trim().replace(/  +/g, ' ').split(' ').length; 
+                document.getElementById("#wordNum").innerHTML = count; 
+            }
+
+
+            function autoSave()
             {
                 fs.writeFile('/note', document.querySelector('#note').innerHTML, function (err) {
                     if (err) throw err; 
@@ -37,13 +46,6 @@
                     }
                     });
             }
-
-            hotkeys('ctrl+x', function(event,handler) {
-                switch(handler.key) {
-                    case 'ctrl+x': console.log("Test");
-                }
-            });
- 
 
 
            
