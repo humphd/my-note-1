@@ -23,10 +23,16 @@
         
             window.addEventListener('DOMContentLoaded', (event) => {
                 fs.readFile('/note', 'utf8', function (err, data) {
+
+                    const elem = document.querySelector('#note');
+
                     if (err) {
-                        document.querySelector('#note').innerHTML = "Typing Area";   
+                        elem.innerHTML = "Typing Area";   
                     } else {
-                        document.querySelector('#note').innerHTML = data; 
+                        elem.innerHTML = data; 
+
+                        // Set autofocus
+                        elem.focus();
                     }
                 });
             });
