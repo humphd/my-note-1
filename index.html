@@ -13,10 +13,12 @@
         <p id="wordNum">Word Count: 0</p>
         <button onclick="manualSave()">Save File</button>
         <button onclick="clearText()">Clear Text</button>
+        <button onclick="download()">Download</button>
         <p id="savedmessage"></p>
 
         <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
         <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
         <link rel="stylesheet" href="paper.css">
         <script>
             const fs = new Filer.FileSystem();
@@ -78,6 +80,11 @@
                 setTimeout(function() {
                     document.querySelector("#savedmessage").innerHTML = ""
                 }, 2000);
+            }
+
+            function download() {
+                var b = new Blob([document.querySelector('#note').innerHTML], {type: "text/plain;charset=utf-8"});
+                saveAs(b, "note.txt");
             }
 
         </script>
