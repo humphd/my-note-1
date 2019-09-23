@@ -9,7 +9,7 @@
         <!-- This is a comment -->
         <h2 style="margin-top:-5px;">Note taking application</h1>
         <h4 style="margin-top:-50px;">[auto saves every 3 seconds]</h4>
-        <div id="note" contenteditable style="background-color:#e6e6ff; width:500px; height:400px; margin-top:-30px;"></div>
+        <div id="note" contenteditable style="background-color:#e6e6ff; width:500px; height:400px; margin-top:-30px; overflow-y: scroll; "></div>
         <p id="wordNum">Word Count: 0</p>
         <button onclick="manualSave()">Save File</button>
         <button onclick="clearText()">Clear Text</button>
@@ -23,10 +23,16 @@
         
             window.addEventListener('DOMContentLoaded', (event) => {
                 fs.readFile('/note', 'utf8', function (err, data) {
+
+                    const elem = document.querySelector('#note');
+
                     if (err) {
-                        document.querySelector('#note').innerHTML = "Typing Area";   
+                        elem.innerHTML = "Typing Area";   
                     } else {
-                        document.querySelector('#note').innerHTML = data; 
+                        elem.innerHTML = data; 
+
+                        // Set autofocus
+                        elem.focus();
                     }
                 });
             });
@@ -36,17 +42,29 @@
             var countInterval = window.setInterval(wordCount, 100);
 
             function clearText() {
-                document.querySelector("#note").innerHTML = "";
+                elem.innerHTML = "";
             }
             
             function wordCount() {
-                var count = document.querySelector("#note").innerHTML.trim().replace(/  +/g, ' ').split(' ').length;
-                if (document.querySelector("#note").innerHTML.length == 0) count = 0;
+
+                var count = elem.innerHTML.trim();
+                count = count.replace(/&nbsp;+/g, "");
+                count = count.replace(/<[^>]*>/g, " ");
+                count = count.replace(/\s+/g, " ");
+                count = count.split(" ");
+                var p = 0;
+                for( var i = 0; i < count.length; i++){
+                    if(count[i] == "")
+                        ++p;
+                }
+
+                count = count.length - p; 
+
                 document.querySelector("#wordNum").innerHTML = "Word Count: " + count; 
             }
 
             function writeFile() {
-                fs.writeFile('/note', document.querySelector('#note').innerHTML, function (err) {
+                fs.writeFile('/note', elem.innerHTML, function (err) {
                     if (err) throw err; 
                     else {
                         console.log("File was autosaved")
