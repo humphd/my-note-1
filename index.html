@@ -11,7 +11,7 @@
         <!-- This is a comment -->
         <h2 style="margin-top:-5px;">Note taking application</h1>
         <h4 style="margin-top:-50px;">[auto saves every 3 seconds]</h4>
-        <div id="note" contenteditable style="background-color:#e6e6ff; margin-top:-30px; overflow-y: scroll; "></div>
+        <div id="note" contenteditable style="background-color:#e6e6ff; width:500px; height:400px; margin-top:-30px; overflow-y: scroll; "></div>
         <p id="wordNum">Word Count: 0</p>
         <button onclick="manualSave()">Save File</button>
         <button onclick="clearText()">Clear Text</button>
@@ -25,7 +25,7 @@
         <script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
         <script>
             const fs = new Filer.FileSystem();
-        
+            
             window.addEventListener('DOMContentLoaded', (event) => {
                 fs.readFile('/note', 'utf8', function (err, data) {
 
@@ -47,7 +47,7 @@
             var countInterval = window.setInterval(wordCount, 100);
 
             function clearText() {
-                document.querySelector("#note").innerHTML = "";
+                elem.innerHTML = "";
             }
             
             function wordCount() {
@@ -65,11 +65,11 @@
 
                 count = count.length - p; 
 
-                document.querySelector("#wordNum").innerHTML = "Word Count: " + count; 
+                document.querySelector('#wordNum').innerHTML = "Word Count: " + count; 
             }
 
             function writeFile() {
-                fs.writeFile('/note', document.querySelector('#note').innerHTML, function (err) {
+                fs.writeFile('/note', elem.innerHTML, function (err) {
                     if (err) throw err; 
                     else {
                         console.log("File was autosaved")
